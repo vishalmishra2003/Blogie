@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 
@@ -26,11 +27,13 @@ const Home = () => {
                 <main className="p-4">
                     {blogs.map((blog) => (
                         // <h1>{blog.title}</h1>
-                        <div key={blog._id} className="bg-white rounded shadow p-4 mb-4">
-                            <h2 className="text-2xl font-bold">{blog.title}</h2>
-                            <p className="text-gray-600 text-sm"><b></b>by {blog.user.firstName} {blog.user.lastName}</p>
-                            <p className="mt-2">{blog.description}</p>
-                        </div>
+                        <Link to={`/ViewBlog/${blog._id}`}>
+                            <div key={blog._id} className="bg-white rounded shadow md:p-4 mb-4">
+                                <h2 className="text-center text-2xl font-bold">{blog.title}</h2>
+                                <p className="text-right m-3 text-gray-500 text-sm">by {blog.user.firstName} {blog.user.lastName}</p>
+                                <p className="text-center mt-2">{blog.description}</p>
+                            </div>
+                        </Link>
                     ))}
                 </main>
 

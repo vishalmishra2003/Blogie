@@ -65,7 +65,7 @@ const getSingleBLog = async (req, res) => {
             return res.status(404).json({ message: "No Such Blog Exist" })
         }
 
-        const singleBlog = await blogSchema.findById(id).populate("_id")
+        const singleBlog = await blogSchema.findById(id).populate("user")
 
         console.log(singleBlog)
 
@@ -84,14 +84,19 @@ const deleteSingleBlog = async (req, res) => {
             return res.status(400).json({ message: "Invalid ID for Deleting" })
         }
 
-        const deleteBlog = await blogSchema.findByIdAndDelete(id).populate("_id")
+        const deleteBlog = await blogSchema.findByIdAndDelete(id).populate("user")
 
-        await deleteBlog.user.blog.pull(deleteBlog)
-        await deleteBlog.user.save()
+        // await deleteBlog.user.blog.pull(deleteBlog)
+        // await deleteBlog.user.save()
 
-        res.status(200).json(deleteBlog)
-        console.log(deleteBlog)
+        if (deleteBlog.user && deleteBlog.user.blog) {
+            deleteBlog.user.blog.pull(deleteBlog._id);
+            await deleteBlog.user.save();
+        }
 
+        console.log("Deleted Blog : ", deleteBlog)
+
+        res.status(200).json({ message: "Blog Deleted Successfully" })
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: "Error While Deleting Blog" })

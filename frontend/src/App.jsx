@@ -7,6 +7,7 @@ import About from './Components/About'
 import Login from './Components/Login'
 import Register from './Components/Register'
 import CreateBlog from './Components/CreateBlog'
+import ViewBlog from './Components/ViewBlog'
 // import Form from './Components/Form'
 
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/CreateBlog' element={<CreateBlog />} />
         <Route path='/About' element={<About />} />
         <Route path='/Blogs' element={<Blogs />} />
+        <Route path='/ViewBlog/:id' element={<ViewBlog />} />
       </Routes>
     </>
   )

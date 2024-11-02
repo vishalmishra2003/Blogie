@@ -44,7 +44,7 @@ const Navbar = () => {
                         <>
                             <Link to='/Login'
                                 onClick={handleLogin}
-                                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2 transition duration-300 hover:bg-blue-700"
+                                className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2 transition duration-300 hover:bg-blue-700"
                             >
                                 Login
                             </Link>
@@ -52,7 +52,7 @@ const Navbar = () => {
                     ) : (
                         <button
                             onClick={handleLogout}
-                            className="bg-red-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-red-700"
+                            className="bg-red-500 text-white px-2 py-1 rounded-md transition duration-300 hover:bg-red-700"
                         >
                             Logout
                         </button>
