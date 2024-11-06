@@ -8,10 +8,11 @@ const Home = () => {
 
     // console.log(blogs)
     useEffect(() => {
-        const fetchBlog = () => {
-            axios.get('http://localhost:5000/getAllBlogs')
+        const fetchBlog = async () => {
+            await axios.get('http://localhost:5000/getAllBlogs')
                 .then((res) => {
-                    // console.log("Response : ", res.data)
+                    console.log("Response : ", res.data)
+                    console.log("Blogs Length :", blogs.length)
                     setBlogs(res.data)
                 })
                 .catch((err) => {
@@ -24,24 +25,30 @@ const Home = () => {
     return (
         <div>
             <div className="min-h-screen bg-gray-100">
-                <main className="p-4">
-                    {blogs.map((blog) => (
-                        // <h1>{blog.title}</h1>
-                        <Link to={`/ViewBlog/${blog._id}`}>
-                            <div key={blog._id} className="bg-white rounded shadow md:p-4 mb-4">
-                                <h2 className="text-center text-2xl font-bold">{blog.title}</h2>
-                                <p className="text-right m-3 text-gray-500 text-sm">by {blog.user.firstName} {blog.user.lastName}</p>
-                                <p className="text-center mt-2">{blog.description}</p>
-                            </div>
-                        </Link>
-                    ))}
+                <main className="p-4" >
+                    {
+                        blogs.length > 0 ?
+                            (
+                                blogs.map((blog) => (
+                                    // <h1>{blog.title}</h1>
+                                    <Link to={`/ViewBlog/${blog._id}`} key={blog._id}>
+                                        <div className="bg-white rounded shadow md:p-4 mb-4">
+                                            <h2 className="text-center text-2xl font-bold">{blog.title}</h2>
+                                            <p className="text-right m-3 text-gray-500 text-sm">by {blog.user.firstName} {blog.user.lastName}</p>
+                                            <p className="text-center mt-2">{blog.description}</p>
+                                        </div>
+                                    </Link>
+                                ))
+                            ) :
+                            <h1>No Blog in Database</h1>
+                    }
                 </main>
 
                 <footer className="bg-gray-800 text-white p-4 text-center">
                     <p>&copy; 2024 My Blog. All rights reserved.</p>
                 </footer>
             </div>
-        </div>
+        </div >
     )
 }
 

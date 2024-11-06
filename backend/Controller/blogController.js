@@ -7,7 +7,7 @@ const newBlog = async (req, res) => {
 
     let existingUser;
     const user = _id;
-    console.log(req.body)
+    // console.log(req.body)
     // console.log(_id)
     try {
         if (!isValidObjectId(_id)) {
@@ -40,7 +40,6 @@ const newBlog = async (req, res) => {
         res.status(500).json({ message: "Something went wrong while creating the blog" });
     }
 };
-
 
 const getAllBlogs = async (req, res) => {
     try {
@@ -86,9 +85,6 @@ const deleteSingleBlog = async (req, res) => {
 
         const deleteBlog = await blogSchema.findByIdAndDelete(id).populate("user")
 
-        // await deleteBlog.user.blog.pull(deleteBlog)
-        // await deleteBlog.user.save()
-
         if (deleteBlog.user && deleteBlog.user.blog) {
             deleteBlog.user.blog.pull(deleteBlog._id);
             await deleteBlog.user.save();
@@ -104,24 +100,29 @@ const deleteSingleBlog = async (req, res) => {
 }
 
 const updateBlog = async (req, res) => {
+    // const id = req.params.id;
     const { id } = req.params
-    const { title, description, image, _id } = req.body
+    const { title, description, image } = req.body;
     try {
         if (!id) {
-            return res.status(400).json({ message: "Invalid Id to Update" })
+            return res.status(400).json({ message: "Invalid Id to Update" });
         }
-        const updatedBlog = await blogSchema.findByIdAndUpdate({ _id: _id }, {
-            title: title,
-            description: description,
-            image: image,
-            user: user
-        })
-        res.status(200).json(updatedBlog)
+        const updatedBlog = await blogSchema.findByIdAndUpdate(id, {
+            title,
+            description,
+            image
+        }, { new: true });
+
+        if (!updatedBlog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+
+        res.status(200).json(updatedBlog);
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ message: "Failed while updating blog" })
+        console.log(error);
+        res.status(500).json({ message: "Failed while updating blog" });
     }
-}
+};
 
 
 module.exports = { newBlog, getAllBlogs, getSingleBLog, deleteSingleBlog, updateBlog }

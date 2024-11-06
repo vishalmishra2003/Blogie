@@ -8,8 +8,8 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import CreateBlog from './Components/CreateBlog'
 import ViewBlog from './Components/ViewBlog'
+import UpdateBlog from './Components/UpdateBlog'
 // import Form from './Components/Form'
-
 
 const App = () => {
   return (
@@ -23,6 +23,7 @@ const App = () => {
         <Route path='/About' element={<About />} />
         <Route path='/Blogs' element={<Blogs />} />
         <Route path='/ViewBlog/:id' element={<ViewBlog />} />
+        <Route path='/UpdateBlog/:id' element={<UpdateBlog />} />
       </Routes>
     </>
   )

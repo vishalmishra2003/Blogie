@@ -26,8 +26,8 @@ const ViewBlog = () => {
     return (
         <div>
             <div key={singleBlog._id} className="bg-white rounded shadow md:p-4 mb-4">
-                <h2 className="text-center text-2xl font-bold">{singleBlog.title}</h2>
-                <p className="text-right m-3 text-gray-500 text-sm">by {singleBlog.user.firstName} {singleBlog.user.lastName}</p>
+                <h2 className="text-center text-2xl font-bold">{singleBlog.title}</h2> {/*.user*/}
+                <p className="text-right m-3 text-gray-500 text-sm">by {singleBlog.firstName} {singleBlog.lastName}</p>
                 <p className="text-center mt-2">{singleBlog.description}</p>
             </div>
         </div>

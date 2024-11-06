@@ -118,4 +118,15 @@ const getUserBlog = async (req, res) => {
     }
 }
 
+const deleteUser = async () => {
+    const { id } = req.body
+    const deletedUser = await userSchema.findByIdAndDelete(id).populate('blog')
+
+    if (deletedUser.blog) {
+        deletedUser.blog.pull();
+        await deleteBlog.user.save();
+    }
+
+
+}
 module.exports = { signUp, loginUser, getAllUser, getSingleUser, getUserBlog }
