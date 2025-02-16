@@ -20,12 +20,11 @@ const Register = () => {
             setError("Passwords do not match");
             return;
         }
-        // userName,
         axios.post('http://localhost:5000/createUser', { firstName, lastName, email, password, confirmPassword })
             .then((res) => {
                 console.log("success", res)
                 if (res.status === 201) {
-                    alert("Registered Successfully BRO !!!")
+                    alert("Registered Successfully")
                     navigate('/login')
                 }
             })
@@ -38,8 +37,6 @@ const Register = () => {
                     console.log("Error", err)
                 }
             })
-
-        // alert('Registered successfully');
     };
 
     return (
@@ -67,16 +64,6 @@ const Register = () => {
                             required
                         />
                     </div>
-                    {/* <div>
-                        <label className="block mb-1 font-medium">Username</label>
-                        <input
-                            type="text"
-                            className="w-full border border-gray-300 px-4 py-2 rounded-md"
-                            value={userName}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div> */}
                     <div>
                         <label className="block mb-1 font-medium">Email</label>
                         <input
@@ -94,6 +81,8 @@ const Register = () => {
                             className="w-full border border-gray-300 px-4 py-2 rounded-md"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            minLength="6"
+                            maxLength="10"
                             required
                         />
                     </div>

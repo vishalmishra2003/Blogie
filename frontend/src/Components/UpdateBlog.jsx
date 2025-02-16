@@ -9,7 +9,7 @@ const UpdateBlog = () => {
     const [singleBlogData, setSingleBlogData] = useState([])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const UpdateBlog = () => {
                 setSingleBlogData(res.data)
                 setTitle(res.data.title)
                 setDescription(res.data.description)
-                setImage(res.data.image)
+                // setImage(res.data.image)
             } catch (error) {
                 console.log(err)
             }
@@ -35,7 +35,13 @@ const UpdateBlog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.put(`http://localhost:5000/updateBlog/${id}`, { title, description, image })
+            const formData = new FormData();
+            formData.append('title', title)
+            formData.append('description', description)
+            formData.append('image', image)
+            const res = await axios.put(`http://localhost:5000/updateBlog/${id}`, formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            )
             console.log(res)
             navigate('/Blogs')
         } catch (error) {
@@ -71,7 +77,7 @@ const UpdateBlog = () => {
                             <div className="mb-4">
                                 <label className="block text-gray-700">Image</label>
                                 <input
-                                    type="Text"
+                                    type="file"
                                     className="mt-1 p-2 w-full border rounded"
                                     value={image}
                                     onChange={(e) => setImage(e.target.value)}

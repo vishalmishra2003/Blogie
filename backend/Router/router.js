@@ -4,6 +4,18 @@ const route = express.Router()
 const { signUp, loginUser, getAllUser, getSingleUser, getUserBlog } = require('../Controller/userController')
 const { newBlog, getAllBlogs, getSingleBLog, deleteSingleBlog, updateBlog } = require('../Controller/blogController')
 
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        return cb(null, './uploads')
+    },
+    filename: (req, file, cb) => {
+        return cb(null, Date.now() + file.originalname)
+    }
+})
+
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
 route.use(express.json())
 
 // New User 
@@ -19,7 +31,7 @@ route.get('/getUserData', getAllUser)
 route.get('/getSingleUser/:id', getSingleUser)
 
 // New Blog
-route.post('/createBlog', newBlog)
+route.post('/createBlog', upload.single('image'), newBlog)
 
 // Fetch all Blogs
 route.get('/getAllBlogs', getAllBlogs)

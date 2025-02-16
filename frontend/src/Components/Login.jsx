@@ -19,17 +19,17 @@ const Login = () => {
                     setUserData(response.data)
                     setIsLogin(true)
                     console.log("Response Data : ", response.data)
-                    alert("Yo Bro !!! Hogya Login ")
+                    alert("Logged In Successfully")
                     navigate('/')
                 }
             }))
             .catch((err) => {
                 if (err.response.status === 404) {
-                    alert("Aisa Koi hai hee nhi Humare Database me :( ")
+                    alert("No Such User Exist")
                     navigate('/register')
                 } else if (err.response.status === 401) {
                     console.log("Incorrect Password  ", err.response)
-                    alert("Password Galat hai Bro")
+                    alert("Incorrect Password")
                 }
                 console.log(err)
             })

@@ -3,14 +3,14 @@ const blogSchema = require('../Model/blogSchema')
 const userSchema = require('../Model/userSchema')
 
 const newBlog = async (req, res) => {
-    const { title, description, image, _id } = req.body;
+    const { title, description, user } = req.body;
+
+    console.log("Req Body : ", req.file)
+    const image = req.file ? req.file.path : null
 
     let existingUser;
-    const user = _id;
-    // console.log(req.body)
-    // console.log(_id)
     try {
-        if (!isValidObjectId(_id)) {
+        if (!isValidObjectId(user)) {
             return res.status(400).json({ message: "Invalid user ID" });
         }
 
@@ -36,7 +36,7 @@ const newBlog = async (req, res) => {
         return res.status(201).json({ message: "Successful", blog: createBlog });
 
     } catch (error) {
-        console.log(error);
+        console.log("Here Is Error :", error);
         res.status(500).json({ message: "Something went wrong while creating the blog" });
     }
 };
@@ -66,7 +66,7 @@ const getSingleBLog = async (req, res) => {
 
         const singleBlog = await blogSchema.findById(id).populate("user")
 
-        console.log(singleBlog)
+        // console.log(singleBlog)
 
         res.status(200).json(singleBlog)
 
@@ -90,7 +90,7 @@ const deleteSingleBlog = async (req, res) => {
             await deleteBlog.user.save();
         }
 
-        console.log("Deleted Blog : ", deleteBlog)
+        // console.log("Deleted Blog : ", deleteBlog)
 
         res.status(200).json({ message: "Blog Deleted Successfully" })
     } catch (error) {
@@ -100,7 +100,6 @@ const deleteSingleBlog = async (req, res) => {
 }
 
 const updateBlog = async (req, res) => {
-    // const id = req.params.id;
     const { id } = req.params
     const { title, description, image } = req.body;
     try {

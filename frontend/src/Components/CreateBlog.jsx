@@ -5,26 +5,33 @@ import { useNavigate } from 'react-router-dom'
 
 const CreateBlog = () => {
 
+    const formData = new FormData();
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [image, setImage] = useState('')
-    // const [user, setUser] = useState('')
+    const [image, setImage] = useState()
     const { isLogin, userData } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(userData)
+        console.log(image)
+        console.dir(userData)
         const { _id } = userData
         console.log(_id)
-        axios.post('http://localhost:5000/createBlog', { title, description, image, _id })
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('image', image)
+        formData.append('user', _id)
+        axios.post(
+            'http://localhost:5000/createBlog',
+            formData,
+            { headers: { 'Content-Type': 'multipart/form-data', } }
+        )
             .then((res) => {
-                // console.log("ID : ", id)
-                // console.log(res)
                 navigate('/blogs')
             })
             .catch((err) => {
-                console.log(err)
+                console.log("Error : ", err)
             })
     }
     return (
@@ -56,9 +63,9 @@ const CreateBlog = () => {
                             <div className="mb-4">
                                 <label className="block text-gray-700">Image</label>
                                 <input
-                                    type="Text"
+                                    type="file"
                                     className="mt-1 p-2 w-full border rounded"
-                                    onChange={(e) => setImage(e.target.value)}
+                                    onChange={(e) => setImage(e.target.files[0])}
                                 />
                             </div>
                             <button
@@ -72,7 +79,7 @@ const CreateBlog = () => {
                 </div> :
                 <div className="min-h-screen bg-gray-100 flex items-center justify-center">
                     <div className="bg-white p-8 rounded shadow-md w-full max-w-lg">
-                        <h1 className="text-2xl font-bold mb-4">Login to Krrr Vroo Pehle</h1>
+                        <h1 className="text-2xl font-bold mb-4">You Need To Login First</h1>
                     </div>
                 </div>
         }
