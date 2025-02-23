@@ -5,8 +5,8 @@ const userSchema = require('../Model/userSchema')
 const newBlog = async (req, res) => {
     const { title, description, user } = req.body;
 
-    console.log("Req Body : ", req.file)
-    const image = req.file ? req.file.path : null
+    // console.log("Req Body : ", req.file)
+    const image = req.file ? req.file.filename : null
 
     let existingUser;
     try {
@@ -47,7 +47,7 @@ const getAllBlogs = async (req, res) => {
         // console.log("",allBlogs)
         // allBlogs.map(blog => {
         //     // const isFname = blog.user.firstName ? blog.user.firstName : ""
-        //     console.log(blog.user)
+        // console.log(allBlogs)
         // })
 
         res.status(200).json(allBlogs)

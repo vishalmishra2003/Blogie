@@ -20,7 +20,6 @@ const Blogs = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/getSingleUser/Blog/${id}`)
-                console.log(res.data)
                 setBlogs(res.data)
             } catch (err) {
                 console.log(err)
@@ -74,8 +73,12 @@ const Blogs = () => {
                                                 <FontAwesomeIcon icon={faPenToSquare} />
                                             </Link>
                                         </div>
-                                        <h2 className="text-2xl font-bold">{blog.title}</h2>
-                                        <p className="mt-2">{blog.description}</p>
+                                        <h2 className="text-2xl text-center p-2 font-bold">{blog.title}</h2>
+                                        <img src={`http://localhost:5000/uploads/${blog.image}`}
+                                            className="img-fluid rounded shadow-sm border-0 mx-auto d-block max-w-md"
+                                            alt="Image Not Found" />
+
+                                        <p className="mt-2 text-center">{blog.description}</p>
                                     </div>
                                 </Link>
                             ))
