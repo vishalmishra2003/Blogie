@@ -6,7 +6,6 @@ const Home = () => {
 
     const [blogs, setBlogs] = useState([])
 
-    // console.log(blogs)
     useEffect(() => {
         const fetchBlog = async () => {
             await axios.get('http://localhost:5000/getAllBlogs')
@@ -30,17 +29,19 @@ const Home = () => {
                         blogs.length > 0 ?
                             (
                                 blogs.map((blog) => (
-                                    // <h1>{blog.title}</h1>
                                     <Link to={`/ViewBlog/${blog._id}`} key={blog._id}>
                                         <div className="bg-white rounded shadow md:p-4 mb-4">
                                             <h2 className="text-center text-2xl font-bold">{blog.title}</h2>
                                             <p className="text-right m-3 text-gray-500 text-sm">by {blog.user.firstName} {blog.user.lastName}</p>
+                                            <img src={`http://localhost:5000/uploads/${blog.image}`}
+                                                className="img-fluid rounded shadow-sm border-0 mx-auto d-block max-w-md"
+                                                alt="Image Not Found" />
                                             <p className="text-center mt-2">{blog.description}</p>
                                         </div>
                                     </Link>
                                 ))
                             ) :
-                            <h1>No Blog in Database</h1>
+                            <h1 className='text-center text-bold'>No Blog in Database</h1>
                     }
                 </main>
 

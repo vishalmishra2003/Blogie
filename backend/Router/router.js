@@ -1,4 +1,3 @@
-const userSchema = require('../Model/userSchema')
 const express = require('express')
 const route = express.Router()
 const { signUp, loginUser, getAllUser, getSingleUser, getUserBlog } = require('../Controller/userController')
@@ -8,7 +7,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        return cb(null, './uploads')
+        return cb(null, 'Assets/uploads')
     },
     filename: (req, file, cb) => {
         return cb(null, Date.now() + file.originalname)

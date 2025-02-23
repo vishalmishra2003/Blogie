@@ -10,6 +10,7 @@ const PORT = process.env.PORT
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static('Assets'))
 
 app.use(route)
 
