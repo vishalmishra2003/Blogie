@@ -5,8 +5,8 @@ const route = require('./Router/router')
 const cors = require('cors')
 const app = express()
 
-const DB = process.env.URL;
-const PORT = process.env.PORT
+const DB = process.env.URL; //mongodb+srv://vishalmishra7112003:vishalmishra7112003@blogpage.kq5r9mf.mongodb.net/Blog
+const PORT = process.env.PORT //5000
 
 app.use(cors())
 app.use(express.json())
